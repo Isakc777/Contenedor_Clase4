@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+actor Main
+Main--> LOOKUP: buscar("transaccionBancaria")
+Main<-- LOOKUP: tb
+
+Main-->  Proxy: realizarTransferencia("001","002",100)
+Proxy-->Handler:invoke
+Handler--> Target:realizarTransferencia("001","002",100)
+Handler<--TransaccionBancariaImpl
+Proxy<--TransaccionBancariaImpl
+Main<--Proxy
+
+
+box "Contenedor" #LightBlue
+participant LOOKUP
+participant Proxy
+participant Handler
+participant TransaccionBancariaImpl
+
+
+@enduml
